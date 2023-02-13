@@ -16,6 +16,7 @@
 		52F99B3240346E34005469FF /* SecondTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F99B3140346E34005469FF /* SecondTests.swift */; };
 		52F99B3C40346E34005469FF /* SecondUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F99B3B40346E34005469FF /* SecondUITests.swift */; };
 		52F99B3E40346E34005469FF /* SecondUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F99B3D40346E34005469FF /* SecondUITestsLaunchTests.swift */; };
+		52F99B4D40346E34005469FF /* Page2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F99B4C40346E34005469FF /* Page2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		52F99B3740346E34005469FF /* SecondUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SecondUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		52F99B3B40346E34005469FF /* SecondUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondUITests.swift; sourceTree = "<group>"; };
 		52F99B3D40346E34005469FF /* SecondUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		52F99B4C40346E34005469FF /* Page2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			children = (
 				52F99B1B40346E32005469FF /* SecondApp.swift */,
 				52F99B1D40346E32005469FF /* ContentView.swift */,
+				52F99B4C40346E34005469FF /* Page2.swift */,
 				52F99B1F40346E34005469FF /* Assets.xcassets */,
 				52F99B2440346E34005469FF /* Persistence.swift */,
 				52F99B2640346E34005469FF /* Second.xcdatamodeld */,
@@ -267,6 +270,7 @@
 				52F99B1E40346E32005469FF /* ContentView.swift in Sources */,
 				52F99B1C40346E32005469FF /* SecondApp.swift in Sources */,
 				52F99B2840346E34005469FF /* Second.xcdatamodeld in Sources */,
+				52F99B4D40346E34005469FF /* Page2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

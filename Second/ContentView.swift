@@ -8,81 +8,85 @@
 import SwiftUI
 import CoreData
 
+
+struct Value: Identifiable{
+    let id = UUID()
+    var value:Int
+    var ascii:String
+}
+
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
-
+    @State var sliderVal = 0.0
+    @State var dakshTitle = "Aashish"
+    @State var dakshBorder = Color(.black)
+    @State var goToPage2 = false
+    @State var data:[Value] = []
+    @State var temp = Page2()
+    
     var body: some View {
         NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+            VStack{
+                NavigationLink(destination: temp, isActive: $goToPage2){
+                    Text("Next >")
+                }.padding(.leading, 300).padding(.top, 5)
+                var daksh = Text(dakshTitle).multilineTextAlignment(.center).frame(width: 100.0).border(dakshBorder, width: 3).foregroundColor(.purple).cornerRadius(10).padding(.bottom, 20).onAppear(){
+                    print(goToPage2)
+                    if(goToPage2 == false){
+                        data = []
+                        
+                        for var j in 0...25{
+                            data.append(Value(value: j, ascii: "" + String(UnicodeScalar(j+65)!) ))
+                        }
+                        
+                        Page2.onCompletition = { received in
+                            print(received)
+                        }
+                        
                     }
                 }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                daksh
+                Image(uiImage: UIImage(named: "Image1")!).resizable().scaledToFit().frame(width: 350).foregroundColor(.red).border(.gray, width: 5)
+                
+                
+                
+                
+                Slider(value: $sliderVal, onEditingChanged: { _ in
+                    print(sliderVal)
+                }).rotationEffect(.degrees(270)).padding().frame(width: 100)
+                
+                Button("Click Me", action: {
+                    sliderVal = 1.0
+                    dakshTitle = "Daksh"
+                    dakshBorder = .purple
+                }).fontWeight(.bold).fontWidth(.expanded).font(.system(size: 40)).background(.gray).cornerRadius(18).padding(.trailing, 100).shadow(color: .red, radius: 20, x:10, y: 10)
+                
+                Table(data) {
+                    TableColumn("Counting") { val in
+                        HStack{
+                            Text("\(val.value)")
+                            Spacer()
+                            Text("\(val.ascii)")
+                            Spacer()
+                            Image(uiImage: UIImage(named: "Image1")!).resizable().scaledToFit().frame(width: 50).foregroundColor(.red).border(.gray, width: 5)
+                        }.contentShape(Rectangle()).onTapGesture {
+                            temp.clickedIdx = val.id
+                            temp.data = self.data
+                            goToPage2 = true
+                        }
                     }
                 }
+                
             }
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+            
+            
         }
     }
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ContentView()
     }
 }
